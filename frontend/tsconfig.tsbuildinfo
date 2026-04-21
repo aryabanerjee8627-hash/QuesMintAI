@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/env.d.ts","./src/main.tsx","./src/components/protectedroute.tsx","./src/features/auth/authpage.tsx","./src/features/auth/useauth.ts","./src/features/dashboard/dashboardpage.tsx","./src/lib/queryclient.ts","./src/lib/supabase.ts"],"version":"5.9.3"}
