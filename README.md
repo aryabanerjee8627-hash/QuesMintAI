@@ -1,264 +1,155 @@
 # QuesMint 🚀
 
-> AI-powered quiz generation platform that transforms notes, PDFs, images, and study materials into high-quality quizzes, MCQs, and mock tests.
-
-![QuesMint Banner Placeholder](./assets/banner.png)
+AI-powered quiz generation platform that transforms notes, PDFs, images, and study materials into quizzes, MCQs, and mock tests.
 
 ---
 
-# ✨ Why QuesMint Exists
+## ✨ Why QuesMint Exists
 
-QuesMint was built with a deeply personal purpose.
+QuesMint was built to solve a real educational workflow problem.
 
-My mother is a teacher, and I constantly saw how much time teachers spend creating worksheets, MCQs, mock tests, and revision papers manually. Existing tools felt slow, generic, or lacked proper educational understanding.
+My mother is a teacher, and I saw how time-consuming it was to manually create worksheets, MCQs, revision papers, and mock tests. Existing tools often felt generic or inefficient, so I started building a platform focused on speed, usability, and better AI-assisted question generation.
 
-So I built **QuesMint** — an AI-powered platform designed to reduce the repetitive work of question creation while still maintaining quality, structure, and usability.
-
-The project is heavily AI-assisted, but the vision, architecture decisions, UX direction, integration flow, and product thinking were all intentionally designed to solve a real problem.
+The project combines full-stack development, AI integration, and modern SaaS-style UI/UX design into a single learning-focused platform.
 
 ---
 
-# 🌟 What QuesMint Does
+## 🌟 Features
 
-QuesMint allows users to:
-
-* 📄 Upload notes, PDFs, and study material
-* 🖼️ Generate quizzes from images and multimodal content
-* 🧠 Use AI-powered contextual understanding for better questions
-* 📚 Create MCQs, practice tests, and revision quizzes instantly
-* 📜 View previous quiz history
-* ⚡ Experience a fast, premium SaaS-style UI
-* 🌙 Work inside a modern dark-mode-first interface
+* 📄 Generate quizzes from notes and PDFs
+* 🖼️ Create quizzes from images and multimodal content
+* 🧠 AI-powered contextual question generation
+* 📚 MCQs, practice tests, and revision quizzes
+* 📜 Quiz history tracking
+* 🌙 Modern dark-mode-first UI
+* ⚡ Fast and responsive experience
 
 ---
 
-# 🏗️ Tech Stack
+## 🏗️ Tech Stack
 
-## Frontend
+### Frontend
 
-| Technology      | Purpose                                 |
-| --------------- | --------------------------------------- |
-| Next.js 16      | App Router + Full-stack React Framework |
-| React 19        | UI Rendering                            |
-| Tailwind CSS v4 | Styling System                          |
-| shadcn/ui       | Component System                        |
-| Framer Motion   | Animations + Microinteractions          |
-| Supabase SSR    | Authentication + Session Handling       |
-| Sonner          | Toast Notifications                     |
+* Next.js
+* React
+* Tailwind CSS
+* shadcn/ui
+* Framer Motion
+* Supabase SSR
 
----
+### Backend
 
-## Backend
+* FastAPI
+* Python
+* PostgreSQL / Supabase
+* Gemini API
+* JWT Authentication
 
-| Technology          | Purpose                       |
-| ------------------- | ----------------------------- |
-| FastAPI             | API Framework                 |
-| Python 3.12+        | Backend Runtime               |
-| Supabase/PostgreSQL | Database Layer                |
-| Gemini 1.5 Flash    | AI Generation Engine          |
-| python-jose         | JWT Authentication            |
-| loguru              | Structured Logging            |
-| httpx AsyncClient   | Async Database/API Operations |
+### DevOps
+
+* Docker
+* docker-compose
 
 ---
 
-# 🧠 Core Architecture
+## 🧠 Architecture
 
 ```text
 Frontend (Next.js)
         ↓
-Centralized API Layer
+API Layer
         ↓
 FastAPI Backend
         ↓
-AI Services + Database Layer
+AI Services + Database
         ↓
 Supabase PostgreSQL
 ```
 
-QuesMint follows a clean layered architecture:
+Project structure follows a modular layered architecture:
 
 ```text
 API Routes → Services → Database
 ```
 
-This structure keeps the project scalable, modular, and maintainable.
-
 ---
 
-# 🔥 Key Features
+## 🔥 Core Features
 
-## 🎯 AI-Powered Quiz Generation
+### AI Quiz Generation
 
-Generate contextual quizzes from:
+Generate quizzes from:
 
 * PDFs
 * Notes
 * Images
-* Study material
-* Multimodal content
+* Study materials
 
----
+### Multimodal Processing
 
-## 🧩 Multimodal RAG Pipeline
-
-The backend includes:
-
-* AI-powered contextual extraction
-* "Full Scan" anti-bias logic
+* Context-aware extraction
 * Structured question generation
-* Better semantic understanding of uploaded material
+* Improved semantic understanding
 
----
+### Authentication
 
-## 🌙 Premium Dark UI
+* Supabase SSR authentication
+* JWT verification
+* Protected API routes
 
-Inspired by:
+### Modern UI
 
-* Linear
-* Perplexity
-* Modern SaaS products
+Inspired by modern SaaS products with:
 
-Features:
-
-* Soft violet/blue accents
-* Smooth transitions
+* Smooth animations
 * Skeleton loaders
 * Responsive layouts
-* Minimal visual clutter
+* Minimal UI clutter
 
 ---
 
-## 🔒 Secure Authentication
+## 📊 Current Status
 
-Implemented using:
+### ✅ Completed
 
-* Supabase SSR
-* JWT verification
-* Protected backend routes
-* Server-side session management
-
----
-
-## 🐳 Full Dockerized Setup
-
-Includes:
-
-* Optimized Dockerfiles
-* docker-compose orchestration
-* Unified frontend/backend execution
-* Easy local deployment
-
----
-
-# 📊 Current Progress
-
-## ✅ Completed
-
-### Frontend
-
-* Landing Page
-* Authentication Pages
-* Dashboard
-* Create Quiz Flow
-* Quiz Execution UI
-* History Page
-* Premium Design System
-
-### Backend
-
-* FastAPI API Structure
-* JWT Security Layer
-* AI Service Integration
-* Database Persistence Layer
-* Structured Logging
-* Quiz Generation Endpoint
-
-### Integration
-
-* Frontend ↔ Backend API Communication
-* FormData file uploads
+* Authentication system
+* Dashboard UI
+* Quiz generation flow
+* Quiz history
+* FastAPI backend structure
+* AI integration
 * Docker setup
+* Frontend ↔ Backend integration
 
----
-
-## ⏳ In Progress
+### ⏳ In Progress
 
 * Advanced error handling
-* Token/credit tracking system
-* Full auth synchronization
-* Automated testing suite
+* Token/credit tracking
+* Automated testing
+* Deployment pipeline
 
 ---
 
-# 🔌 API Endpoints
+## 🔌 API Endpoints
 
 | Method | Endpoint             | Description                       |
 | ------ | -------------------- | --------------------------------- |
 | POST   | `/api/quiz/generate` | Generate quiz from uploaded files |
 | GET    | `/api/quiz/history`  | Retrieve quiz history             |
-| GET    | `/api/health`        | System health check               |
+| GET    | `/api/health`        | Health check                      |
 
 ---
 
-# 🎨 Design Philosophy
+## 🚀 Local Setup
 
-QuesMint is designed around three principles:
-
-## 1. Speed
-
-Every interaction should feel instant.
-
-## 2. Simplicity
-
-Minimal UI clutter with strong visual hierarchy.
-
-## 3. Feedback
-
-Every async action includes:
-
-* Skeleton loaders
-* Loading indicators
-* Toast notifications
-* Smooth state transitions
-
----
-
-# 📁 Suggested Project Structure
-
-```text
-quesmint/
-│
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── app/
-│   └── lib/
-│
-├── backend/
-│   ├── app/
-│   ├── services/
-│   ├── routes/
-│   └── database/
-│
-├── docker-compose.yml
-└── README.md
-```
-
----
-
-# 🚀 Local Setup
-
-## 1. Clone Repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/yourusername/quesmint.git
 cd quesmint
 ```
 
----
-
-## 2. Configure Environment Variables
+### 2. Configure Environment Variables
 
 Create:
 
@@ -276,9 +167,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 GEMINI_API_KEY=
 ```
 
----
-
-## 3. Run with Docker
+### 3. Run with Docker
 
 ```bash
 docker-compose up --build
@@ -286,86 +175,34 @@ docker-compose up --build
 
 ---
 
-# 🧪 Planned Testing Stack
-
-| Area     | Tool       |
-| -------- | ---------- |
-| Backend  | Pytest     |
-| Frontend | Vitest     |
-| E2E      | Playwright |
-
----
-
-# 💡 What Makes This Project Special
-
-Even though AI tools were heavily used during development, this project still required:
-
-* Product thinking
-* Architecture planning
-* API integration knowledge
-* UI/UX direction
-* Debugging and iteration
-* State management understanding
-* Backend/frontend orchestration
-* Real-world problem solving
-
-Using AI effectively is also a skill.
-
-QuesMint is not just a tutorial clone — it solves a genuine educational workflow problem.
-
----
-
-# 🚧 Project Status
-
-QuesMint is currently a prototype and is not publicly deployed yet.
-
-The focus right now is on:
-
-* Refining the core product experience
-* Improving backend stability
-* Completing authentication synchronization
-* Adding production-grade testing
-* Finalizing deployment infrastructure
-
-Public deployment and production rollout are planned soon.
-
-Even in its prototype stage, the project already includes a full-stack architecture, AI integration pipeline, Dockerized setup, and a polished SaaS-style frontend experience.
-
----
-
-# 🛣️ Future Roadmap
+## 🛣️ Roadmap
 
 * 📊 Teacher analytics dashboard
-* 🧾 Export quizzes as PDFs
+* 🧾 PDF export support
 * 🧠 Difficulty tuning
 * 🌍 Multi-language generation
 * 👥 Classroom management
-* 📱 Mobile-responsive optimization
-* ☁️ Cloud deployment pipeline
-* 💳 Subscription/credit system
+* ☁️ Cloud deployment
+* 💳 Subscription system
 
 ---
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions, ideas, and feedback are welcome.
 
-If you find bugs or have feature suggestions, feel free to open an issue or pull request.
+Feel free to open issues or submit pull requests.
 
 ---
 
-# 📜 License
+## 📜 License
 
 MIT License
 
 ---
 
-# ❤️ Final Note
+## ❤️ Final Note
 
-QuesMint started as a project for my mother.
+QuesMint started as a small project inspired by a real classroom problem and evolved into a full-stack AI application focused on educational productivity.
 
-It became a full-stack AI SaaS product that taught me architecture, UI/UX systems, backend engineering, API design, AI integration, and product development.
-
-And honestly — that journey matters more than whether every line was handwritten.
-
- 
+The project helped me learn backend engineering, frontend architecture, AI integration, Docker, authentication systems, and product-focused UI/UX design through building something practical and useful.
