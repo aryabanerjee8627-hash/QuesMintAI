@@ -1,22 +1,33 @@
 from functools import lru_cache
+from typing import List
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    # This tells Pydantic to look for a .env file one level up from the backend folder
+    model_config = SettingsConfigDict(
+        env_file=".env", 
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
-    app_name: str = "QuesMint API"
-    app_env: str = "development"
-    backend_cors_origins: str = "http://localhost:5173,http://localhost:5174"
-    supabase_url: str
-    supabase_jwt_secret: str
-    supabase_service_role_key: str
-    gemini_api_key: str
+    APP_NAME: str = "QuesMint API"
+    DEBUG: bool = True
+    
+    # Supabase Configuration
+    SUPABASE_URL: str
+    SUPABASE_ANON_KEY: str
+    SUPABASE_JWT_SECRET: str
+    
+    # Gemini Configuration
+    GEMINI_API_KEY: str
+    
+    BACKEND_CORS_ORIGINS: str = "http://localhost:5173"
 
     @property
-    def cors_origins(self) -> list[str]:
-        return [origin.strip() for origin in self.backend_cors_origins.split(",") if origin.strip()]
+    def cors_origins(self) -> List[str]:
+        return [origin.strip() for origin in self.BACKEND_CORS_ORIGINS.split(",") if origin.strip()]
 
 
 @lru_cache

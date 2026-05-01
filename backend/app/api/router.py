@@ -1,10 +1,15 @@
 from fastapi import APIRouter
-
-from app.api.routes.auth import router as auth_router
-from app.api.routes.health import router as health_router
-from app.api.routes.quiz import router as quiz_router
+from app.api.routes import quiz
 
 api_router = APIRouter(prefix="/api")
-api_router.include_router(health_router)
-api_router.include_router(auth_router)
-api_router.include_router(quiz_router)
+
+# Register our quiz routes
+api_router.include_router(quiz.router)
+
+# We can add auth, users, and history routes here later
+# api_router.include_router(auth.router)
+# api_router.include_router(history.router)
+
+@api_router.get("/status")
+def get_status():
+    return {"status": "operational", "version": "v1"}
