@@ -7,33 +7,61 @@ from app.services.database import db_service
 
 router = APIRouter(prefix="/quiz", tags=["quiz"])
 
+@router.get("/usage")
+async def get_usage(current_user: dict = Depends(get_current_user)):
+    """
+    Returns the user's daily quiz usage.
+    """
+    try:
+        count = await db_service.get_daily_usage_count(current_user["id"])
+        return {"used": count, "limit": 10}
+    except Exception as e:
+        print(f"Database Error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch usage stats")
+
 @router.post("/generate", response_model=QuizResponse)
 async def generate_quiz(
     files: List[UploadFile] = File(...),
-    keywords: Optional[str] = Form(None),
-    question_count: int = Form(20),
+    subject: str = Form("General"),
+    question_count: int = Form(10),
     question_types: str = Form("mcq"),
+    difficulty: str = Form("Medium"),
     current_user: dict = Depends(get_current_user)
 ):
     """
     1. Receives images and generation parameters.
-    2. Calls Gemini AI to generate quiz content.
-    3. Persists the quiz and questions to Supabase.
-    4. Returns the full DB-backed quiz object.
+    2. Validates daily limits and constraints.
+    3. Calls Gemini AI to generate quiz content.
+    4. Persists the quiz and questions to Supabase.
+    5. Returns the full DB-backed quiz object.
     """
     
     # 1. Validation Logic
-    if len(files) > 10:
-        raise HTTPException(status_code=400, detail="Maximum 10 images allowed")
+    # Daily Limit Check
+    daily_count = await db_service.get_daily_usage_count(current_user["id"])
+    if daily_count >= 10:
+        raise HTTPException(
+            status_code=429, 
+            detail="Daily generation limit reached (10/day). Please try again tomorrow."
+        )
+
+    if len(files) > 15:
+        raise HTTPException(status_code=400, detail="Maximum 15 images allowed")
+    
+    if question_count > 20:
+        raise HTTPException(status_code=400, detail="Maximum 20 questions allowed per quiz")
     
 
     image_bytes_list = []
     for file in files:
-        if file.content_type not in ["image/jpeg", "image/png"]:
-            raise HTTPException(status_code=400, detail=f"File {file.filename} is not a valid image (JPEG/PNG only)")
+        if file.content_type not in ["image/jpeg", "image/png", "application/pdf"]:
+            raise HTTPException(status_code=400, detail=f"File {file.filename} is not a valid format (JPEG/PNG/PDF only)")
         
         content = await file.read()
-        image_bytes_list.append(content)
+        image_bytes_list.append({
+            "mime_type": file.content_type,
+            "data": content
+        })
 
 
     try:
@@ -46,20 +74,21 @@ async def generate_quiz(
         image_data_list=image_bytes_list,
         question_count=question_count,
         preferred_types=preferred_types,
-        keywords=keywords
+        subject=subject
     )
 
     if not raw_questions:
         raise HTTPException(status_code=500, detail="AI failed to generate quiz content")
 
     # 3. Persistence Logic (Senior Tip: Keep the title descriptive)
-    title = f"Quiz on {keywords}" if keywords else f"Quiz from {len(files)} images"
+    title = f"{subject} Quiz from {len(files)} images"
     
     try:
         saved_quiz = await db_service.save_quiz(
             user_id=current_user["id"],
             title=title,
-            questions=raw_questions
+            questions=raw_questions,
+            difficulty=difficulty
         )
         return saved_quiz
     except Exception as e:
@@ -78,3 +107,33 @@ async def get_quiz_history(current_user: dict = Depends(get_current_user)):
     except Exception as e:
         print(f"Database Error: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch quiz history")
+
+@router.get("/{quiz_id}", response_model=QuizResponse)
+async def get_quiz(quiz_id: str, current_user: dict = Depends(get_current_user)):
+    """
+    Retrieves a specific quiz by ID.
+    """
+    try:
+        quiz = await db_service.get_quiz_by_id(quiz_id, current_user["id"])
+        if not quiz:
+            raise HTTPException(status_code=404, detail="Quiz not found")
+        return quiz
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Database Error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch quiz")
+
+@router.delete("/{quiz_id}")
+async def delete_quiz(quiz_id: str, current_user: dict = Depends(get_current_user)):
+    """
+    Deletes a specific quiz.
+    """
+    try:
+        success = await db_service.delete_quiz(quiz_id, current_user["id"])
+        if not success:
+            raise HTTPException(status_code=404, detail="Quiz not found")
+        return {"message": "Quiz deleted successfully"}
+    except Exception as e:
+        print(f"Database Error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete quiz")

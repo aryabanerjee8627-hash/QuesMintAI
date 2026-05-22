@@ -1,43 +1,50 @@
+import httpx
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
 from loguru import logger
 
 from app.core.config import Settings, get_settings
 
 security = HTTPBearer()
 
-def get_current_user(
+async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
     settings: Settings = Depends(get_settings),
 ) -> dict:
-    
+    """
+    Verifies the token directly with Supabase.
+    This is more reliable than local decoding as it doesn't depend on 
+    local secret matching.
+    """
     token = credentials.credentials
     
-    try:
-        payload = jwt.decode(
-            token,
-            settings.SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
-            options={"verify_aud": False} 
-        )
-        
-        user_id: str = payload.get("sub")
-        email: str = payload.get("email")
-        
-        if user_id is None:
-            logger.error("JWT Payload missing 'sub' (user_id)")
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid token: missing user ID",
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(
+                f"{settings.SUPABASE_URL}/auth/v1/user",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "apikey": settings.SUPABASE_ANON_KEY
+                }
             )
             
-        return {"id": user_id, "email": email}
-        
-    except JWTError as e:
-        logger.warning(f"Invalid JWT token provided: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+            if response.status_code != 200:
+                logger.warning(f"Supabase auth failed: {response.text}")
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid or expired session",
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+            
+            user_data = response.json()
+            return {
+                "id": user_data.get("id"),
+                "email": user_data.get("email")
+            }
+            
+        except httpx.RequestError as e:
+            logger.error(f"Network error during auth: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Authentication service unavailable"
+            )

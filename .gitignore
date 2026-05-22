@@ -7,3 +7,6 @@ node_modules/
 dist/
 .DS_Store
 .venv/
+.gemini/
+AGENTS.md
+UI_NEW.md
