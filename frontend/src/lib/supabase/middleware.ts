@@ -28,7 +28,25 @@ export async function updateSession(request: NextRequest) {
   )
 
   // refreshing the auth token
-  await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Protected routes check
+  const isDashboardRoute = request.nextUrl.pathname.startsWith('/dashboard')
+  const isAuthRoute = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup')
+
+  if (isDashboardRoute && !user) {
+    // Redirect to login if trying to access dashboard while not logged in
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+
+  if (isAuthRoute && user) {
+    // Redirect to dashboard if trying to access login/signup while already logged in
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
+    return NextResponse.redirect(url)
+  }
 
   return supabaseResponse
 }

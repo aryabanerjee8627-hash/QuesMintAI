@@ -43,18 +43,26 @@ export default function HistoryPage() {
         const data = await api.getHistory()
         setQuizzes(data)
       } catch (error) {
-        // Fallback for demo if API fails
-        setQuizzes([
-          { id: "1", title: "Machine Learning Basics", created_at: new Date().toISOString(), difficulty: "Hard", question_count: 15 },
-          { id: "2", title: "History of Rome", created_at: new Date(Date.now() - 86400000).toISOString(), difficulty: "Medium", question_count: 10 },
-          { id: "3", title: "React 19 New Features", created_at: new Date(Date.now() - 172800000).toISOString(), difficulty: "Easy", question_count: 5 },
-        ])
+        toast.error("Failed to fetch history")
+        setQuizzes([])
       } finally {
         setLoading(false)
       }
     }
     fetchHistory()
   }, [])
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this quiz? This cannot be undone.")) return
+
+    try {
+      await api.deleteQuiz(id)
+      setQuizzes(quizzes.filter(q => q.id !== id))
+      toast.success("Quiz deleted successfully")
+    } catch (error) {
+      toast.error("Failed to delete quiz")
+    }
+  }
 
   const filteredQuizzes = quizzes.filter(q => 
     q.title.toLowerCase().includes(search.toLowerCase())
@@ -104,16 +112,17 @@ export default function HistoryPage() {
                     <BrainCircuit className="w-5 h-5" />
                   </div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
-                        <MoreVertical className="w-4 h-4" />
-                      </Button>
+                    <DropdownMenuTrigger className="h-8 w-8 text-muted-foreground hover:bg-white/5 rounded-lg flex items-center justify-center transition-colors">
+                      <MoreVertical className="w-4 h-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10">
                       <DropdownMenuItem className="gap-2">
                         <Eye className="w-4 h-4" /> View Details
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="gap-2 text-red-400 focus:text-red-400">
+                      <DropdownMenuItem 
+                        className="gap-2 text-red-400 focus:text-red-400 cursor-pointer"
+                        onClick={() => handleDelete(quiz.id)}
+                      >
                         <Trash2 className="w-4 h-4" /> Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

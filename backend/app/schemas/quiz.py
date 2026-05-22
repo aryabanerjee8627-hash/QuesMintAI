@@ -11,11 +11,15 @@ class QuestionType(str, Enum):
     long_answer = "long_answer"
 
 class Question(BaseModel):
-    question: str
+    text: str = Field(..., alias="question")
     type: QuestionType
     options: Optional[List[str]] = None 
+    correct_index: Optional[int] = None
     answer: str
     explanation: str
+
+    class Config:
+        populate_by_name = True
 
 class QuestionInDB(Question):
     id: UUID
@@ -24,6 +28,7 @@ class QuestionInDB(Question):
 
 class QuizBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
+    difficulty: str = "Medium"
 
 class QuizCreate(QuizBase):
     questions: List[Question]
@@ -33,8 +38,5 @@ class QuizResponse(QuizBase):
     user_id: UUID
     created_at: datetime
     questions: Optional[List[QuestionInDB]] = None
+    question_count: int = 0
 
-class QuizGenerateRequest(BaseModel):
-    keywords: Optional[str] = Field(None, max_length=200)
-    question_count: int = Field(20, ge=1, le=20)
-    preferred_types: List[QuestionType] = Field(default=[QuestionType.mcq])

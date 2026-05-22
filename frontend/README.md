@@ -2,7 +2,7 @@
 
 > AI-powered quiz generation platform that transforms notes, PDFs, images, and study materials into high-quality quizzes, MCQs, and mock tests.
 
-
+![QuesMint Banner Placeholder](./assets/banner.png)
 
 ---
 
@@ -321,7 +321,15 @@ QuesMint is currently a prototype and is not publicly deployed yet.
 
 The focus right now is on:
 
-* Refining the core product e
+* Refining the core product experience
+* Improving backend stability
+* Completing authentication synchronization
+* Adding production-grade testing
+* Finalizing deployment infrastructure
+
+Public deployment and production rollout are planned soon.
+
+Even in its prototype stage, the project already includes a full-stack architecture, AI integration pipeline, Dockerized setup, and a polished SaaS-style frontend experience.
 
 ---
 

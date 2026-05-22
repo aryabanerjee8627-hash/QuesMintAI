@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone"
 import { 
   Upload, 
   FileText, 
-  Image as ImageIcon, 
+  ImageIcon, 
   X, 
   Sparkles, 
   Loader2,
@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { toast } from "sonner"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { api } from "@/lib/api"
@@ -25,8 +26,25 @@ export default function CreateQuizPage() {
   const [files, setFiles] = useState<File[]>([])
   const [numQuestions, setNumQuestions] = useState(10)
   const [difficulty, setDifficulty] = useState("Medium")
+  const [subject, setSubject] = useState("General")
+  const [questionTypes, setQuestionTypes] = useState<string[]>(["mcq"])
+  const [generatedQuizId, setGeneratedQuizId] = useState<string | null>(null)
+
+  const toggleQuestionType = (type: string) => {
+    if (questionTypes.includes(type)) {
+      if (questionTypes.length > 1) {
+        setQuestionTypes(questionTypes.filter(t => t !== type))
+      }
+    } else {
+      setQuestionTypes([...questionTypes, type])
+    }
+  }
 
   const onDrop = (acceptedFiles: File[]) => {
+    if (files.length + acceptedFiles.length > 15) {
+      toast.error("Maximum 15 files allowed")
+      return
+    }
     setFiles([...files, ...acceptedFiles])
   }
 
@@ -36,7 +54,8 @@ export default function CreateQuizPage() {
       'application/pdf': ['.pdf'],
       'image/*': ['.png', '.jpg', '.jpeg'],
       'text/plain': ['.txt']
-    }
+    },
+    maxFiles: 15
   })
 
   const handleGenerate = async () => {
@@ -50,11 +69,14 @@ export default function CreateQuizPage() {
       
       const formData = new FormData()
       files.forEach((file) => formData.append("files", file))
-      formData.append("num_questions", numQuestions.toString())
+      formData.append("question_count", numQuestions.toString())
       formData.append("difficulty", difficulty)
+      formData.append("subject", subject)
+      formData.append("question_types", questionTypes.join(","))
 
-      await api.generateQuiz(formData)
+      const result = await api.generateQuiz(formData)
       
+      setGeneratedQuizId(result.id)
       setState("SUCCESS")
       toast.success("Quiz generated successfully!")
     } catch (error: any) {
@@ -66,6 +88,11 @@ export default function CreateQuizPage() {
   const removeFile = (index: number) => {
     setFiles(files.filter((_, i) => i !== index))
   }
+
+  const subjects = [
+    "General", "Physics", "Chemistry", "Maths", 
+    "Computer", "Biology", "English", "History", "Geography"
+  ]
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -86,7 +113,7 @@ export default function CreateQuizPage() {
               <Card className="md:col-span-2 border-white/5 bg-white/5">
                 <CardHeader>
                   <CardTitle>Upload Materials</CardTitle>
-                  <CardDescription>Support for PDFs, Images, and Text files</CardDescription>
+                  <CardDescription>Support for PDFs, Images, and Text files (Max 15)</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div 
@@ -103,14 +130,14 @@ export default function CreateQuizPage() {
                       </div>
                       <div>
                         <p className="font-medium">Click to upload or drag and drop</p>
-                        <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or TXT (max. 10MB)</p>
+                        <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or TXT (max. 15 files)</p>
                       </div>
                     </div>
                   </div>
 
                   {files.length > 0 && (
                     <div className="space-y-3">
-                      <p className="text-sm font-medium">Selected Files ({files.length})</p>
+                      <p className="text-sm font-medium">Selected Files ({files.length}/15)</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {files.map((file, i) => (
                           <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 group">
@@ -136,9 +163,26 @@ export default function CreateQuizPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Number of Questions</label>
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Subject</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {subjects.map((s) => (
+                          <Button 
+                            key={s} 
+                            variant="outline" 
+                            size="sm" 
+                            className={`text-[10px] h-8 ${s === subject ? "border-violet-500 text-violet-400 bg-violet-500/5" : "border-white/10"}`}
+                            onClick={() => setSubject(s)}
+                          >
+                            {s}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Questions</label>
                       <div className="flex gap-2">
-                        {[5, 10, 15].map((n) => (
+                        {[5, 10, 20].map((n) => (
                           <Button 
                             key={n} 
                             variant="outline" 
@@ -167,6 +211,28 @@ export default function CreateQuizPage() {
                         ))}
                       </div>
                     </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Question Types</label>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          { id: 'mcq', label: 'MCQ' },
+                          { id: 'one_word', label: 'Short' },
+                          { id: 'long_answer', label: 'Long' }
+                        ].map((t) => (
+                          <Button 
+                            key={t.id} 
+                            variant="outline" 
+                            size="sm" 
+                            className={questionTypes.includes(t.id) ? "border-violet-500 text-violet-400 bg-violet-500/5" : "border-white/10"}
+                            onClick={() => toggleQuestionType(t.id)}
+                          >
+                            {t.label}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
                     <Button 
                       className="w-full bg-violet-600 hover:bg-violet-700 mt-4 h-12 group"
                       disabled={files.length === 0}
@@ -231,10 +297,16 @@ export default function CreateQuizPage() {
               Your high-quality questions are ready for you to review.
             </p>
             <div className="flex gap-4">
-              <Button size="lg" className="bg-violet-600 hover:bg-violet-700 px-8">
-                Take Quiz Now
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => setState("IDLE")}>
+              <Link href={`/dashboard/quiz/${generatedQuizId}`}>
+                <Button size="lg" className="bg-violet-600 hover:bg-violet-700 px-8">
+                  Take Quiz Now
+                </Button>
+              </Link>
+              <Button variant="outline" size="lg" onClick={() => {
+                setState("IDLE")
+                setFiles([])
+                setGeneratedQuizId(null)
+              }}>
                 Create Another
               </Button>
             </div>
