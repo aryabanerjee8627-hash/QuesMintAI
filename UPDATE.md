@@ -1,1 +1,0 @@
-## Backend deployed at https://quesmintai.onrender.com . However issues with frontend need thorough checking and debugging . Not able to process quiz out of [text](keph102.pdf) . Need to compose-uo --build then git update . 
