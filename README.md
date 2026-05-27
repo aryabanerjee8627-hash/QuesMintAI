@@ -2,7 +2,10 @@
 
 QuesMint is a premium, AI-powered quiz generation SaaS platform designed to transform educational material into high-quality, structured assessments.
 
-![Landing Page](landingpage.jpg)
+### Landing Page
+![Landing Page 1](lp1.jpg)
+![Landing Page 2](lp2.jpg)
+![Landing Page 3](lp3.jpg)
 
 ## 🏗️ Architecture
 
@@ -45,4 +48,4 @@ QuesMint is a premium, AI-powered quiz generation SaaS platform designed to tran
 3. **Resilience**: Specialized handlers for large multimodal inputs.
 
 ---
-*Built with ❤️ for better education.*
+*Built by Arya Banerjee*

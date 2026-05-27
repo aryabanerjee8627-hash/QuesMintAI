@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
+import Image from "next/image"
 import { 
   LayoutDashboard, 
   PlusCircle, 
@@ -10,7 +11,6 @@ import {
   Settings, 
   LogOut, 
   Menu,
-  Sparkles,
   ChevronLeft
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -36,9 +36,7 @@ export default function DashboardLayout({
         {/* Mobile Header */}
         <header className="lg:hidden flex items-center justify-between p-4 border-b border-white/5 bg-navy-surface/40 backdrop-blur-md">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="bg-primary p-1.5 rounded-lg shadow-[0_0_10px_rgba(61,217,179,0.3)]">
-              <Sparkles className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <Image src="/Quesmint.png" alt="QuesMint Logo" width={24} height={24} className="rounded-lg shadow-[0_0_10px_rgba(61,217,179,0.3)]" />
             <span className="font-bold text-xl tracking-tighter">QuesMint</span>
           </Link>
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(true)}>

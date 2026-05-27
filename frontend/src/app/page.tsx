@@ -3,7 +3,8 @@
 import { Navbar } from "@/components/landing/navbar";
 import { Hero } from "@/components/landing/hero";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Brain, Zap, LineChart, ShieldCheck } from "lucide-react";
+import { ArrowRight, Brain, Zap, LineChart, ShieldCheck } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { TypewriterHeading } from "@/components/landing/typewriter-heading";
@@ -108,9 +109,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-12">
             <div className="flex items-center gap-3">
-              <div className="bg-primary p-2 rounded-xl">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
-              </div>
+              <Image src="/Quesmint.png" alt="QuesMint Logo" width={32} height={32} className="rounded-lg" />
               <span className="font-bold text-2xl tracking-tighter">QuesMint</span>
             </div>
             

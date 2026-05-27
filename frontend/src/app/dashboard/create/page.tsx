@@ -7,10 +7,10 @@ import {
   FileText, 
   ImageIcon, 
   X, 
-  Sparkles, 
   Loader2,
   CheckCircle2,
-  BrainCircuit
+  BrainCircuit,
+  Wand2
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { toast } from "sonner"
@@ -238,7 +238,7 @@ export default function CreateQuizPage() {
                       disabled={files.length === 0}
                       onClick={handleGenerate}
                     >
-                      <Sparkles className="w-4 h-4 mr-2 group-hover:animate-pulse" />
+                      <Wand2 className="w-4 h-4 mr-2 group-hover:animate-pulse" />
                       Generate Quiz
                     </Button>
                   </CardContent>
