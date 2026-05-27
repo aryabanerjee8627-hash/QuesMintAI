@@ -89,9 +89,7 @@ export function Sidebar({ isOpen, toggle }: { isOpen: boolean, toggle: () => voi
         {/* Logo */}
         <div className="flex items-center justify-between mb-10">
           <Link href="/dashboard" className={cn("flex items-center gap-3 overflow-hidden transition-all", !isOpen && "w-0")}>
-            <div className="bg-primary p-2 rounded-xl shrink-0 shadow-[0_0_15px_rgba(61,217,179,0.4)]">
-              <Sparkles className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <img src="/Quesmint.png" alt="QuesMint Logo" className="w-10 h-10 object-contain rounded-xl shadow-[0_0_15px_rgba(61,217,179,0.2)]" />
             <span className="font-bold text-2xl tracking-tighter text-foreground">QuesMint</span>
           </Link>
           <Button 

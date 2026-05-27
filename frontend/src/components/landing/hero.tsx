@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles } from "lucide-react"
+import { TypewriterHeading } from "./typewriter-heading"
 
 import { NetworkBackground } from "./network-background"
 
@@ -30,14 +31,13 @@ export function Hero() {
               <span className="text-primary">Quizzes</span>
             </motion.h1>
             
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="max-w-xl mx-auto text-lg md:text-xl text-muted-foreground font-medium"
-            >
-              Turn your notes into high-quality assessments in seconds using Gemini AI.
-            </motion.p>
+            <div className="max-w-xl mx-auto text-lg md:text-xl text-muted-foreground font-medium">
+              <TypewriterHeading 
+                text="Turn your notes into high-quality assessments in seconds using QuesMint AI." 
+                delay={0.8} 
+                className="text-lg md:text-xl font-medium tracking-normal mb-0" 
+              />
+            </div>
           </div>
 
           <motion.div

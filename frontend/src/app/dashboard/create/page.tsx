@@ -41,8 +41,8 @@ export default function CreateQuizPage() {
   }
 
   const onDrop = (acceptedFiles: File[]) => {
-    if (files.length + acceptedFiles.length > 15) {
-      toast.error("Maximum 15 files allowed")
+    if (files.length + acceptedFiles.length > 30) {
+      toast.error("Maximum 30 files allowed")
       return
     }
     setFiles([...files, ...acceptedFiles])
@@ -55,7 +55,7 @@ export default function CreateQuizPage() {
       'image/*': ['.png', '.jpg', '.jpeg'],
       'text/plain': ['.txt']
     },
-    maxFiles: 15
+    maxFiles: 30
   })
 
   const handleGenerate = async () => {
@@ -113,7 +113,7 @@ export default function CreateQuizPage() {
               <Card className="md:col-span-2 border-white/5 bg-white/5">
                 <CardHeader>
                   <CardTitle>Upload Materials</CardTitle>
-                  <CardDescription>Support for PDFs, Images, and Text files (Max 15)</CardDescription>
+                  <CardDescription>Support for PDFs, Images, and Text files (Max 30)</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div 
@@ -130,14 +130,14 @@ export default function CreateQuizPage() {
                       </div>
                       <div>
                         <p className="font-medium">Click to upload or drag and drop</p>
-                        <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or TXT (max. 15 files)</p>
+                        <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or TXT (max. 30 files)</p>
                       </div>
                     </div>
                   </div>
 
                   {files.length > 0 && (
                     <div className="space-y-3">
-                      <p className="text-sm font-medium">Selected Files ({files.length}/15)</p>
+                      <p className="text-sm font-medium">Selected Files ({files.length}/30)</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {files.map((file, i) => (
                           <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 group">
@@ -262,10 +262,15 @@ export default function CreateQuizPage() {
                 <BrainCircuit className="w-10 h-10 text-violet-400 animate-pulse" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold mb-2">Gemini is reading your files...</h2>
-            <p className="text-muted-foreground max-w-sm">
-              We're analyzing the content and crafting unique questions just for you.
-            </p>
+            <h2 className="text-2xl font-bold mb-2">QuesMint AI is reading your files...</h2>
+            <div className="space-y-2">
+              <p className="text-muted-foreground max-w-sm">
+                We're analyzing the content and crafting unique questions just for you.
+              </p>
+              <p className="text-primary/80 font-bold text-xs uppercase tracking-widest animate-pulse">
+                Please do not refresh the page
+              </p>
+            </div>
             
             <div className="mt-12 w-full max-w-md space-y-4">
               {[1, 2, 3].map((i) => (

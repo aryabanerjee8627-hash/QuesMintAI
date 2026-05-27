@@ -128,7 +128,7 @@ export function NetworkBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 -z-10 bg-background"
+      className="fixed inset-0 -z-10 bg-background"
     />
   )
 }

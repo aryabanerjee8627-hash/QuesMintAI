@@ -1,4 +1,5 @@
 from typing import List, Optional
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from app.api.deps.auth import get_current_user
 from app.schemas.quiz import QuestionType, QuizResponse, QuizBase
@@ -45,8 +46,8 @@ async def generate_quiz(
             detail="Daily generation limit reached (10/day). Please try again tomorrow."
         )
 
-    if len(files) > 15:
-        raise HTTPException(status_code=400, detail="Maximum 15 images allowed")
+    if len(files) > 30:
+        raise HTTPException(status_code=400, detail="Maximum 30 images/pages allowed")
     
     if question_count > 20:
         raise HTTPException(status_code=400, detail="Maximum 20 questions allowed per quiz")
@@ -80,8 +81,9 @@ async def generate_quiz(
     if not raw_questions:
         raise HTTPException(status_code=500, detail="AI failed to generate quiz content")
 
-    # 3. Persistence Logic (Senior Tip: Keep the title descriptive)
-    title = f"{subject} Quiz from {len(files)} images"
+    # 3. Persistence Logic (Professional Naming Convention)
+    date_str = datetime.now().strftime("%b %d, %Y")
+    title = f"{subject} {difficulty} Mastery Assessment ({date_str})"
     
     try:
         saved_quiz = await db_service.save_quiz(

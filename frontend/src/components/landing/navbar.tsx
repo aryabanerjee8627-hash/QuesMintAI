@@ -9,9 +9,7 @@ export function Navbar() {
     <header className="fixed top-0 w-full z-50 border-b border-white/10 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-primary p-1.5 rounded-lg group-hover:scale-110 transition-transform">
-            <Sparkles className="w-5 h-5 text-primary-foreground" />
-          </div>
+          <img src="/Quesmint.png" alt="QuesMint Logo" className="w-10 h-10 object-contain rounded-lg shadow-[0_0_10px_rgba(61,217,179,0.2)] group-hover:scale-110 transition-transform" />
           <span className="font-bold text-xl tracking-tight">QuesMint</span>
         </Link>
 
