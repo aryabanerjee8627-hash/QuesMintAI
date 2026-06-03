@@ -155,12 +155,12 @@ export default function SettingsPage() {
             <CardDescription>Irreversible actions for your account.</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="font-medium text-sm">Delete Account</div>
-                <div className="text-xs text-muted-foreground">Permanently delete your account and all data.</div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="font-bold text-sm text-red-400 uppercase tracking-widest">Delete Account</div>
+                <div className="text-xs text-muted-foreground font-medium">Permanently delete your account and all data. This action is irreversible.</div>
               </div>
-              <Button variant="destructive" size="sm">Delete Account</Button>
+              <Button variant="destructive" size="sm" className="w-full sm:w-auto font-bold rounded-xl h-10 px-6">Delete Account</Button>
             </div>
           </CardContent>
         </Card>

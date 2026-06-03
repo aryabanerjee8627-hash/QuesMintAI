@@ -220,24 +220,24 @@ export default function QuizReviewPage() {
 
         {/* Sticky Header Actions (Hidden in Preview) */}
         {previewMode === 'none' && (
-          <div className="sticky top-0 z-10 py-4 bg-background/95 backdrop-blur-xl border-b border-white/5 mb-10 print:hidden">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1.5">
-                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard/history')} className="hover:bg-primary/10 hover:text-primary h-9 w-9" title="Back to History">
-                    <ArrowLeft className="w-5 h-5" />
+          <div className="sticky top-0 z-10 py-4 bg-background/95 backdrop-blur-xl border-b border-white/5 mb-6 md:mb-10 print:hidden">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 md:gap-6">
+              <div className="flex items-center gap-3 md:gap-4">
+                <div className="flex items-center gap-1">
+                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard/history')} className="hover:bg-primary/10 hover:text-primary h-8 w-8 md:h-9 md:w-9" title="Back to History">
+                    <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard')} className="hover:bg-primary/10 hover:text-primary h-9 w-9" title="Back to Home">
-                    <Home className="w-5 h-5" />
+                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard')} className="hover:bg-primary/10 hover:text-primary h-8 w-8 md:h-9 md:w-9" title="Back to Home">
+                    <Home className="w-4 h-4 md:w-5 md:h-5" />
                   </Button>
                 </div>
-                <div>
-                  <h1 className="text-2xl font-bold tracking-tighter">{quiz.title}</h1>
-                  <div className="flex gap-2 mt-1">
-                    <Badge variant="outline" className="text-primary border-primary/30 bg-primary/5 text-[10px] font-bold shadow-[0_0_10px_rgba(61,217,179,0.1)]">
+                <div className="min-w-0">
+                  <h1 className="text-lg md:text-2xl font-bold tracking-tighter truncate">{quiz.title}</h1>
+                  <div className="flex gap-2 mt-0.5 md:mt-1">
+                    <Badge variant="outline" className="text-primary border-primary/30 bg-primary/5 text-[8px] md:text-[10px] font-bold shadow-[0_0_10px_rgba(61,217,179,0.1)]">
                       {quiz.questions.length} Questions
                     </Badge>
-                    <Badge variant="outline" className="text-muted-foreground border-white/10 text-[10px] capitalize font-bold">
+                    <Badge variant="outline" className="text-muted-foreground border-white/10 text-[8px] md:text-[10px] capitalize font-bold">
                       {quiz.difficulty}
                     </Badge>
                   </div>
@@ -248,19 +248,19 @@ export default function QuizReviewPage() {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="border-white/5 bg-white/5 hover:bg-white/10 font-bold text-xs h-9"
+                  className="flex-1 lg:flex-none border-white/5 bg-white/5 hover:bg-white/10 font-bold text-[10px] md:text-xs h-9"
                   onClick={() => setShowAllAnswers(!showAllAnswers)}
                 >
                   {showAllAnswers ? <EyeOff className="w-3.5 h-3.5 mr-2" /> : <Eye className="w-3.5 h-3.5 mr-2" />}
-                  {showAllAnswers ? "Hide Solutions" : "Reveal Solutions"}
+                  <span className="truncate">{showAllAnswers ? "Hide Solutions" : "Reveal Solutions"}</span>
                 </Button>
                 
                 <Button 
                   size="sm"
                   onClick={() => enterPreview('student')}
-                  className="bg-primary text-primary-foreground hover:bg-primary-hover font-bold text-xs shadow-lg shadow-primary/20 h-9"
+                  className="flex-1 lg:flex-none bg-primary text-primary-foreground hover:bg-primary-hover font-bold text-[10px] md:text-xs shadow-lg shadow-primary/20 h-9"
                 >
-                  <Printer className="w-3.5 h-3.5 mr-2" /> Preview & Download
+                  <Printer className="w-3.5 h-3.5 mr-2" /> <span className="truncate">Preview & Download</span>
                 </Button>
               </div>
             </div>

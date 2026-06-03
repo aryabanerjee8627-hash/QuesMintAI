@@ -78,21 +78,21 @@ export default function DashboardPage() {
   return (
     <div className="space-y-10">
       <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-bold tracking-tighter">Welcome back, {userName}!</h1>
-        <p className="text-muted-foreground font-medium">Here's your teaching and learning overview for today.</p>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tighter">Welcome back, {userName}!</h1>
+        <p className="text-sm md:text-base text-muted-foreground font-medium">Here's your teaching and learning overview for today.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {stats.map((stat, i) => (
           <Card key={i} className="border-white/5 bg-navy-surface/40 backdrop-blur-md hover:border-primary/20 transition-all rounded-3xl">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</CardTitle>
+              <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</CardTitle>
               <div className="p-2 rounded-lg bg-primary/10">
                 <stat.icon className={`w-4 h-4 ${stat.color}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold tracking-tight">{stat.value}</div>
+              <div className="text-2xl md:text-3xl font-bold tracking-tight">{stat.value}</div>
             </CardContent>
           </Card>
         ))}
@@ -101,20 +101,20 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card className="border-white/5 bg-navy-surface/40 backdrop-blur-md rounded-[2rem]">
           <CardHeader>
-            <CardTitle className="text-xl font-bold tracking-tight">Quick Actions</CardTitle>
-            <CardDescription className="font-medium">Create a new assessment or manage your library.</CardDescription>
+            <CardTitle className="text-lg md:text-xl font-bold tracking-tight">Quick Actions</CardTitle>
+            <CardDescription className="text-xs md:text-sm font-medium">Create a new assessment or manage your library.</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
             <Link href="/dashboard/create" className="contents">
-              <Button className="h-28 flex flex-col items-center justify-center gap-3 bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-lg shadow-primary/10">
-                <Plus className="w-7 h-7" />
-                <span className="font-bold uppercase tracking-widest text-xs">Create New Quiz</span>
+              <Button className="h-24 md:h-28 flex flex-col items-center justify-center gap-3 bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-lg shadow-primary/10">
+                <Plus className="w-6 h-6 md:w-7 md:h-7" />
+                <span className="font-bold uppercase tracking-widest text-[10px]">Create New Quiz</span>
               </Button>
             </Link>
             <Link href="/dashboard/history" className="contents">
-              <Button variant="outline" className="h-28 flex flex-col items-center justify-center gap-3 border-white/5 bg-white/5 hover:bg-white/10 rounded-2xl">
-                <History className="w-7 h-7 text-primary" />
-                <span className="font-bold uppercase tracking-widest text-xs">View History</span>
+              <Button variant="outline" className="h-24 md:h-28 flex flex-col items-center justify-center gap-3 border-white/5 bg-white/5 hover:bg-white/10 rounded-2xl">
+                <History className="w-6 h-6 md:w-7 md:h-7 text-primary" />
+                <span className="font-bold uppercase tracking-widest text-[10px]">View History</span>
               </Button>
             </Link>
           </CardContent>

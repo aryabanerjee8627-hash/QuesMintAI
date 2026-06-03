@@ -10,7 +10,7 @@ import { NetworkBackground } from "./network-background"
 
 export function Hero() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-32 pb-16">
       <NetworkBackground />
       
       <div className="container mx-auto px-4 text-center z-10">
@@ -25,17 +25,17 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-8xl font-bold tracking-tighter"
+              className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter"
             >
               <span className="text-foreground">Intelligent</span> <br />
               <span className="text-primary">Quizzes</span>
             </motion.h1>
             
-            <div className="max-w-xl mx-auto text-lg md:text-xl text-muted-foreground font-medium">
+            <div className="max-w-xl mx-auto px-4 text-base md:text-xl text-muted-foreground font-medium">
               <TypewriterHeading 
                 text="Turn your notes into high-quality assessments in seconds using QuesMint AI." 
                 delay={0.8} 
-                className="text-lg md:text-xl font-medium tracking-normal mb-0" 
+                className="text-base md:text-xl font-medium tracking-normal mb-0" 
               />
             </div>
           </div>
@@ -46,7 +46,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             <Link href="/login?mode=signup">
-              <button className="px-12 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-bold tracking-widest uppercase transition-all duration-300 text-sm md:text-base">
+              <button className="px-8 md:px-12 py-3 md:py-4 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-bold tracking-widest uppercase transition-all duration-300 text-xs md:text-base">
                 enter quesmint.ai
               </button>
             </Link>

@@ -23,7 +23,7 @@ export default function Home() {
       <Hero />
       
       {/* Features Section */}
-      <section id="features" className="py-20 relative overflow-hidden">
+      <section id="features" className="pt-12 pb-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-16">
             <TypewriterHeading text="Built for Educators" delay={0.5} className="text-white [text-shadow:0_0_20px_rgba(255,255,255,0.3)]" />

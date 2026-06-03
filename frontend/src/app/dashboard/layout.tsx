@@ -32,13 +32,12 @@ export default function DashboardLayout({
     <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className={cn(
+        "flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300",
+        isSidebarOpen ? "ml-64 lg:ml-0" : "ml-20 lg:ml-0"
+      )}>
         {/* Mobile Header */}
-        <header className="lg:hidden flex items-center justify-between p-4 border-b border-white/5 bg-navy-surface/40 backdrop-blur-md">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <Image src="/Quesmint.png" alt="QuesMint Logo" width={24} height={24} className="rounded-lg shadow-[0_0_10px_rgba(61,217,179,0.3)]" />
-            <span className="font-bold text-xl tracking-tighter">QuesMint</span>
-          </Link>
+        <header className="lg:hidden flex items-center justify-end p-4 border-b border-white/5 bg-navy-surface/40 backdrop-blur-md">
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(true)}>
             <Menu className="w-6 h-6" />
           </Button>

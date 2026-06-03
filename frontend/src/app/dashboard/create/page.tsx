@@ -15,6 +15,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion"
 import { toast } from "sonner"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { api } from "@/lib/api"
@@ -109,28 +110,28 @@ export default function CreateQuizPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="md:col-span-2 border-white/5 bg-white/5">
-                <CardHeader>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <Card className="lg:col-span-2 border-white/5 bg-white/5">
+                <CardHeader className="px-6 pt-6">
                   <CardTitle>Upload Materials</CardTitle>
                   <CardDescription>Support for PDFs, Images, and Text files (Max 30)</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 px-6 pb-6">
                   <div 
                     {...getRootProps()} 
                     className={`
-                      border-2 border-dashed rounded-2xl p-12 text-center transition-all cursor-pointer
-                      ${isDragActive ? 'border-violet-500 bg-violet-500/10' : 'border-white/10 hover:border-white/20 hover:bg-white/5'}
+                      border-2 border-dashed rounded-2xl p-6 md:p-12 text-center transition-all cursor-pointer
+                      ${isDragActive ? 'border-primary bg-primary/10' : 'border-white/10 hover:border-white/20 hover:bg-white/5'}
                     `}
                   >
                     <input {...getInputProps()} />
                     <div className="flex flex-col items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-violet-600/20 flex items-center justify-center text-violet-400">
+                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                         <Upload className="w-6 h-6" />
                       </div>
                       <div>
-                        <p className="font-medium">Click to upload or drag and drop</p>
-                        <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or TXT (max. 30 files)</p>
+                        <p className="font-medium text-sm md:text-base">Click to upload or drag and drop</p>
+                        <p className="text-[10px] md:text-xs text-muted-foreground mt-1">PDF, JPG, PNG or TXT (max. 30 files)</p>
                       </div>
                     </div>
                   </div>
@@ -138,14 +139,14 @@ export default function CreateQuizPage() {
                   {files.length > 0 && (
                     <div className="space-y-3">
                       <p className="text-sm font-medium">Selected Files ({files.length}/30)</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10">
                         {files.map((file, i) => (
-                          <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 group">
+                          <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 group">
                             <div className="flex items-center gap-3 overflow-hidden">
                               {file.type.includes('image') ? <ImageIcon className="w-4 h-4 text-blue-400" /> : <FileText className="w-4 h-4 text-orange-400" />}
-                              <span className="text-sm truncate">{file.name}</span>
+                              <span className="text-xs truncate">{file.name}</span>
                             </div>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => removeFile(i)}>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive transition-colors" onClick={() => removeFile(i)}>
                               <X className="w-4 h-4" />
                             </Button>
                           </div>
@@ -158,19 +159,24 @@ export default function CreateQuizPage() {
 
               <div className="space-y-6">
                 <Card className="border-white/5 bg-white/5">
-                  <CardHeader>
+                  <CardHeader className="px-6 pt-6">
                     <CardTitle>Quiz Settings</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Subject</label>
-                      <div className="grid grid-cols-2 gap-2">
+                  <CardContent className="space-y-6 px-6 pb-6">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Subject</label>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2">
                         {subjects.map((s) => (
                           <Button 
                             key={s} 
                             variant="outline" 
                             size="sm" 
-                            className={`text-[10px] h-8 ${s === subject ? "border-violet-500 text-violet-400 bg-violet-500/5" : "border-white/10"}`}
+                            className={cn(
+                              "text-[10px] h-9 rounded-xl transition-all",
+                              s === subject 
+                                ? "border-primary text-primary bg-primary/10 font-bold" 
+                                : "border-white/10 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                            )}
                             onClick={() => setSubject(s)}
                           >
                             {s}
@@ -179,15 +185,20 @@ export default function CreateQuizPage() {
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Questions</label>
-                      <div className="flex gap-2">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Questions</label>
+                      <div className="flex flex-wrap gap-2">
                         {[5, 10, 20].map((n) => (
                           <Button 
                             key={n} 
                             variant="outline" 
                             size="sm" 
-                            className={n === numQuestions ? "border-violet-500 text-violet-400 bg-violet-500/5" : "border-white/10"}
+                            className={cn(
+                              "h-9 px-4 rounded-xl transition-all",
+                              n === numQuestions 
+                                ? "border-primary text-primary bg-primary/10 font-bold" 
+                                : "border-white/10 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                            )}
                             onClick={() => setNumQuestions(n)}
                           >
                             {n}
@@ -195,15 +206,21 @@ export default function CreateQuizPage() {
                         ))}
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Difficulty</label>
-                      <div className="flex gap-2">
+
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Difficulty</label>
+                      <div className="flex flex-wrap gap-2">
                         {['Easy', 'Medium', 'Hard'].map((d) => (
                           <Button 
                             key={d} 
                             variant="outline" 
                             size="sm" 
-                            className={d === difficulty ? "border-violet-500 text-violet-400 bg-violet-500/5" : "border-white/10"}
+                            className={cn(
+                              "h-9 px-4 rounded-xl transition-all",
+                              d === difficulty 
+                                ? "border-primary text-primary bg-primary/10 font-bold" 
+                                : "border-white/10 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                            )}
                             onClick={() => setDifficulty(d)}
                           >
                             {d}
@@ -212,8 +229,8 @@ export default function CreateQuizPage() {
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Question Types</label>
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Question Types</label>
                       <div className="flex flex-wrap gap-2">
                         {[
                           { id: 'mcq', label: 'MCQ' },
@@ -224,7 +241,12 @@ export default function CreateQuizPage() {
                             key={t.id} 
                             variant="outline" 
                             size="sm" 
-                            className={questionTypes.includes(t.id) ? "border-violet-500 text-violet-400 bg-violet-500/5" : "border-white/10"}
+                            className={cn(
+                              "h-9 px-4 rounded-xl transition-all",
+                              questionTypes.includes(t.id) 
+                                ? "border-primary text-primary bg-primary/10 font-bold" 
+                                : "border-white/10 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                            )}
                             onClick={() => toggleQuestionType(t.id)}
                           >
                             {t.label}
@@ -234,7 +256,7 @@ export default function CreateQuizPage() {
                     </div>
 
                     <Button 
-                      className="w-full bg-violet-600 hover:bg-violet-700 mt-4 h-12 group"
+                      className="w-full bg-primary hover:bg-primary-hover text-navy font-bold mt-4 h-12 rounded-xl group shadow-[0_0_20px_rgba(61,217,179,0.2)]"
                       disabled={files.length === 0}
                       onClick={handleGenerate}
                     >
@@ -257,9 +279,9 @@ export default function CreateQuizPage() {
             className="flex flex-col items-center justify-center py-20 text-center"
           >
             <div className="relative mb-8">
-              <div className="w-24 h-24 rounded-full border-4 border-violet-600/20 border-t-violet-600 animate-spin" />
+              <div className="w-24 h-24 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <BrainCircuit className="w-10 h-10 text-violet-400 animate-pulse" />
+                <BrainCircuit className="w-10 h-10 text-primary animate-pulse" />
               </div>
             </div>
             <h2 className="text-2xl font-bold mb-2">QuesMint AI is reading your files...</h2>
@@ -276,7 +298,7 @@ export default function CreateQuizPage() {
               {[1, 2, 3].map((i) => (
                 <div key={i} className="h-4 bg-white/5 rounded-full overflow-hidden">
                   <motion.div 
-                    className="h-full bg-violet-600/50"
+                    className="h-full bg-primary/50"
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
@@ -303,11 +325,11 @@ export default function CreateQuizPage() {
             </p>
             <div className="flex gap-4">
               <Link href={`/dashboard/quiz/${generatedQuizId}`}>
-                <Button size="lg" className="bg-violet-600 hover:bg-violet-700 px-8">
+                <Button size="lg" className="bg-primary hover:bg-primary-hover text-navy font-bold px-8 rounded-xl shadow-[0_0_20px_rgba(61,217,179,0.2)]">
                   Take Quiz Now
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" onClick={() => {
+              <Button variant="outline" size="lg" className="rounded-xl border-white/10" onClick={() => {
                 setState("IDLE")
                 setFiles([])
                 setGeneratedQuizId(null)

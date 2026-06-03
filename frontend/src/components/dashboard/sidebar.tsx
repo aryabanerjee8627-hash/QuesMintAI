@@ -82,23 +82,31 @@ export function Sidebar({ isOpen, toggle }: { isOpen: boolean, toggle: () => voi
     <aside 
       className={cn(
         "fixed inset-y-0 left-0 z-50 flex flex-col border-r border-white/5 bg-navy-surface/80 backdrop-blur-xl transition-all duration-300 ease-in-out lg:relative",
-        isOpen ? "w-72" : "w-20 -translate-x-full lg:translate-x-0"
+        isOpen ? "w-64" : "w-20"
       )}
     >
-      <div className="flex flex-col h-full p-6">
-        {/* Logo */}
-        <div className="flex items-center justify-between mb-10">
-          <Link href="/dashboard" className={cn("flex items-center gap-3 overflow-hidden transition-all", !isOpen && "w-0")}>
-            <img src="/Quesmint.png" alt="QuesMint Logo" className="w-10 h-10 object-contain rounded-xl shadow-[0_0_15px_rgba(61,217,179,0.2)]" />
-            <span className="font-bold text-2xl tracking-tighter text-foreground">QuesMint</span>
+      <div className={cn("flex flex-col h-full transition-all duration-300", isOpen ? "p-6" : "p-4")}>
+        {/* Logo & Toggle */}
+        <div className={cn("flex items-center mb-10", isOpen ? "justify-between" : "justify-center flex-col gap-4")}>
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <img 
+              src="/Quesmint.png" 
+              alt="QuesMint Logo" 
+              className="w-10 h-10 shrink-0 object-contain rounded-xl shadow-[0_0_15px_rgba(61,217,179,0.2)]" 
+            />
+            {isOpen && (
+              <span className="font-bold text-2xl tracking-tighter text-foreground whitespace-nowrap">
+                QuesMint
+              </span>
+            )}
           </Link>
           <Button 
             variant="ghost" 
             size="icon" 
             onClick={toggle}
-            className="hover:bg-primary/10 hover:text-primary lg:hidden"
+            className="hover:bg-primary/10 hover:text-primary transition-colors"
           >
-            <ChevronLeft />
+            <ChevronLeft className={cn("w-5 h-5 transition-transform duration-300", !isOpen && "rotate-180")} />
           </Button>
         </div>
 
@@ -110,17 +118,23 @@ export function Sidebar({ isOpen, toggle }: { isOpen: boolean, toggle: () => voi
               href={route.href}
               className={cn(
                 "flex items-center gap-4 px-4 py-3 rounded-xl transition-all group relative",
+                !isOpen && "justify-center px-2",
                 route.active 
                   ? "bg-primary/10 text-primary font-bold" 
                   : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
               )}
             >
               <route.icon className={cn("w-5 h-5 shrink-0", route.active ? "text-primary" : "group-hover:text-primary transition-colors")} />
-              <span className={cn("transition-opacity duration-200 whitespace-nowrap", !isOpen && "lg:hidden")}>
-                {route.label}
-              </span>
+              {isOpen && (
+                <span className="transition-opacity duration-200 whitespace-nowrap">
+                  {route.label}
+                </span>
+              )}
               {route.active && (
-                <div className="absolute left-0 w-1 h-6 bg-primary rounded-r-full shadow-[0_0_10px_#3DD9B3]" />
+                <div className={cn(
+                  "absolute left-0 w-1 bg-primary rounded-r-full shadow-[0_0_10px_#3DD9B3]",
+                  isOpen ? "h-6" : "h-8"
+                )} />
               )}
             </Link>
           ))}
@@ -156,11 +170,11 @@ export function Sidebar({ isOpen, toggle }: { isOpen: boolean, toggle: () => voi
             onClick={handleLogout}
             className={cn(
               "w-full justify-start gap-4 h-12 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10",
-              !isOpen && "lg:px-2 lg:justify-center"
+              !isOpen && "justify-center px-0"
             )}
           >
             <LogOut className="w-5 h-5" />
-            <span className={cn(!isOpen && "lg:hidden")}>Logout</span>
+            {isOpen && <span>Logout</span>}
           </Button>
         </div>
       </div>
