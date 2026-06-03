@@ -27,7 +27,6 @@ QuesMint is a premium, AI-powered quiz generation SaaS platform designed to tran
 *   **Professional Formatting**: Clean, printable PDF exports for classroom use.
 *   **Advanced Previews**: Student and Answer Key views with B&W mode.
 
-![Generated Quiz](generated-quiz.jpg)
 
 ## 📑 Previews
 
