@@ -213,54 +213,54 @@ export default function QuizReviewPage() {
       )}>
         {/* Minimalist Header for Print (Optional: can be completely removed if user wants zero header) */}
         {previewMode !== 'none' && (
-          <div className="mb-8 border-b-2 border-black pb-4 print:block hidden">
+          <div className="mb-8 border-b-2 border-black pb-4 text-center">
             <h1 className="text-2xl font-bold uppercase tracking-tight">{quiz.title}</h1>
           </div>
         )}
 
         {/* Sticky Header Actions (Hidden in Preview) */}
         {previewMode === 'none' && (
-          <div className="sticky top-0 z-10 py-4 bg-background/95 backdrop-blur-xl border-b border-white/5 mb-6 md:mb-10 print:hidden">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 md:gap-6">
-              <div className="flex items-center gap-3 md:gap-4">
-                <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard/history')} className="hover:bg-primary/10 hover:text-primary h-8 w-8 md:h-9 md:w-9" title="Back to History">
-                    <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
+          <div className="sticky top-0 z-10 py-6 bg-background/95 backdrop-blur-xl border-b border-white/5 mb-6 md:mb-10 print:hidden">
+            <div className="flex flex-col items-center justify-center gap-6 text-center">
+              <div className="flex flex-col items-center gap-4 w-full">
+                <div className="flex items-center justify-center gap-2">
+                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard/history')} className="hover:bg-primary/10 hover:text-primary h-9 w-9" title="Back to History">
+                    <ArrowLeft className="w-5 h-5" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard')} className="hover:bg-primary/10 hover:text-primary h-8 w-8 md:h-9 md:w-9" title="Back to Home">
-                    <Home className="w-4 h-4 md:w-5 md:h-5" />
+                  <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard')} className="hover:bg-primary/10 hover:text-primary h-9 w-9" title="Back to Home">
+                    <Home className="w-5 h-5" />
                   </Button>
                 </div>
-                <div className="min-w-0">
-                  <h1 className="text-lg md:text-2xl font-bold tracking-tighter truncate">{quiz.title}</h1>
-                  <div className="flex gap-2 mt-0.5 md:mt-1">
-                    <Badge variant="outline" className="text-primary border-primary/30 bg-primary/5 text-[8px] md:text-[10px] font-bold shadow-[0_0_10px_rgba(61,217,179,0.1)]">
+                <div className="min-w-0 w-full px-4">
+                  <h1 className="text-xl md:text-3xl font-bold tracking-tighter leading-tight">{quiz.title}</h1>
+                  <div className="flex justify-center gap-2 mt-2">
+                    <Badge variant="outline" className="text-primary border-primary/30 bg-primary/5 text-[10px] font-bold shadow-[0_0_10px_rgba(61,217,179,0.1)]">
                       {quiz.questions.length} Questions
                     </Badge>
-                    <Badge variant="outline" className="text-muted-foreground border-white/10 text-[8px] md:text-[10px] capitalize font-bold">
+                    <Badge variant="outline" className="text-muted-foreground border-white/10 text-[10px] capitalize font-bold">
                       {quiz.difficulty}
                     </Badge>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center gap-3 w-full max-w-sm px-4">
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="flex-1 lg:flex-none border-white/5 bg-white/5 hover:bg-white/10 font-bold text-[10px] md:text-xs h-9"
+                  className="flex-1 border-white/5 bg-white/5 hover:bg-white/10 font-bold text-xs h-10"
                   onClick={() => setShowAllAnswers(!showAllAnswers)}
                 >
-                  {showAllAnswers ? <EyeOff className="w-3.5 h-3.5 mr-2" /> : <Eye className="w-3.5 h-3.5 mr-2" />}
+                  {showAllAnswers ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
                   <span className="truncate">{showAllAnswers ? "Hide Solutions" : "Reveal Solutions"}</span>
                 </Button>
                 
                 <Button 
                   size="sm"
                   onClick={() => enterPreview('student')}
-                  className="flex-1 lg:flex-none bg-primary text-primary-foreground hover:bg-primary-hover font-bold text-[10px] md:text-xs shadow-lg shadow-primary/20 h-9"
+                  className="flex-1 bg-primary text-primary-foreground hover:bg-primary-hover font-bold text-xs shadow-lg shadow-primary/20 h-10"
                 >
-                  <Printer className="w-3.5 h-3.5 mr-2" /> <span className="truncate">Preview & Download</span>
+                  <Printer className="w-4 h-4 mr-2" /> <span className="truncate">Preview & Download</span>
                 </Button>
               </div>
             </div>
@@ -329,7 +329,7 @@ function QuestionCard({
     return (
       <div className="space-y-4 text-black bg-white py-4">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black/40">
+          <div className="flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black/40">
             <span>Question {index + 1}</span>
             <span className="h-1 w-1 rounded-full bg-black/20" />
             <span>{question.type.replace('_', ' ')}</span>
@@ -365,11 +365,11 @@ function QuestionCard({
 
         {isRevealed && (
           <div className="mt-4 p-4 rounded-xl border-2 border-black bg-black/2 space-y-2.5">
-            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-black">
+            <div className="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-wider text-black">
               <Check className="w-3 h-3" />
               Correct Answer
             </div>
-            <div className="text-sm font-bold pl-5 leading-relaxed">
+            <div className="text-sm font-bold text-center leading-relaxed">
               {question.type === "mcq" ? (
                 <>
                   <span className="text-black mr-1.5 font-black">({String.fromCharCode(65 + (question.correct_index ?? 0))})</span>
@@ -379,7 +379,7 @@ function QuestionCard({
                 <LatexRenderer text={question.answer} />
               )}
             </div>
-            <div className="text-[11px] text-black/70 leading-relaxed pl-5 border-l-2 border-black/20 py-0.5 mt-2 italic">
+            <div className="text-[11px] text-black/70 text-center leading-relaxed py-0.5 mt-2 italic">
               <span className="font-bold text-black uppercase tracking-tighter text-[9px] not-italic mr-1.5">Explanation:</span>
               <LatexRenderer text={question.explanation} />
             </div>
@@ -394,9 +394,9 @@ function QuestionCard({
       id={`question-card-${index}`}
       className="border-white/5 bg-navy-surface/30 backdrop-blur-md overflow-hidden transition-all hover:border-primary/20 group print-card rounded-xl shadow-lg"
     >
-      <CardHeader className="flex flex-row items-start justify-between gap-4 pb-2.5 bg-white/5">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
+      <CardHeader className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 pb-2.5 bg-white/5">
+        <div className="space-y-1 w-full text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2">
             <span className="text-[8px] font-bold text-primary uppercase tracking-[0.15em] bg-primary/10 px-2 py-0.5 rounded-full">
               Question {index + 1}
             </span>
@@ -450,7 +450,7 @@ function QuestionCard({
         )}
 
         {/* Action Bar */}
-        <div className="pt-3 flex items-center justify-end border-t border-white/5 print:hidden">
+        <div className="pt-3 flex items-center justify-center border-t border-white/5 print:hidden">
           <Button 
             variant="ghost" 
             size="sm" 
@@ -475,11 +475,11 @@ function QuestionCard({
               className="overflow-hidden"
             >
               <div className="p-3.5 rounded-xl bg-primary/5 border border-primary/15 space-y-2.5 print-solution-section mt-1">
-                <div className="flex items-center gap-2 text-primary font-black text-[9px] uppercase tracking-wider">
+                <div className="flex items-center justify-center gap-2 text-primary font-black text-[9px] uppercase tracking-wider">
                   <Check className="w-2.5 h-2.5" />
                   Correct Answer
                 </div>
-                <div className="text-sm font-bold text-foreground/90 pl-5 leading-relaxed">
+                <div className="text-sm font-bold text-foreground/90 text-center leading-relaxed">
                   {question.type === "mcq" ? (
                     <>
                       <span className="text-primary mr-1.5">({String.fromCharCode(65 + (question.correct_index ?? 0))})</span>
@@ -489,8 +489,8 @@ function QuestionCard({
                     <LatexRenderer text={question.answer} />
                   )}
                 </div>
-                <div className="text-[11px] text-muted-foreground/80 leading-relaxed pl-5 border-l border-primary/20 py-0.5">
-                  <span className="font-bold text-primary/60 uppercase tracking-tighter text-[8px] mr-1.5">Explanation</span>
+                <div className="text-[11px] text-muted-foreground/80 text-center leading-relaxed py-0.5">
+                  <span className="block font-bold text-primary/60 uppercase tracking-tighter text-[8px] mb-1">Explanation</span>
                   <LatexRenderer text={question.explanation} />
                 </div>
               </div>
