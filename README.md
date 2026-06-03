@@ -3,9 +3,9 @@
 QuesMint is a premium, AI-powered quiz generation SaaS platform designed to transform educational material into high-quality, structured assessments.
 
 ### Landing Page
-![Landing Page 1](lp1.png)
-![Landing Page 2](lp2.png)
-![Landing Page 3](lp3.png)
+![Landing Page 1](ss_proofs/lp1.png)
+![Landing Page 2](ss_proofs/lp2.png)
+![Landing Page 3](ss_proofs/lp3.png)
 
 ## 🏗️ Architecture
 
@@ -19,7 +19,7 @@ QuesMint is a premium, AI-powered quiz generation SaaS platform designed to tran
 - **Styling**: Tailwind CSS v4 + shadcn/ui ("Fresh Mint & Rich Navy").
 - **Auth**: Supabase SSR.
 
-![UI Interface](uiinterface.png)
+![UI Interface](ss_proofs/uiinterface.png)
 
 ## 🚀 Key Features
 
@@ -32,7 +32,7 @@ QuesMint is a premium, AI-powered quiz generation SaaS platform designed to tran
 
 | Student View | Answer Key View |
 | :--- | :--- |
-| ![Preview 1](preview1.png) | ![Preview 2](preview2.png) |
+| ![Preview 1](ss_proofs/preview1.png) | ![Preview 2](ss_proofs/preview2.png) |
 
 ## 🌐 Deployment Status
 
